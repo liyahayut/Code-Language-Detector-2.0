@@ -1,0 +1,248 @@
+@font-face {
+  font-family: "JetBrains Mono";
+  src: local("JetBrains Mono");
+}
+
+:root {
+  --bg: #14161f;
+  --panel: #1b1e2b;
+  --panel-raised: #212437;
+  --line: #2c3046;
+  --text: #e7e6e2;
+  --text-dim: #8b8fa3;
+  --mint: #7fd4a0;
+  --amber: #e8b04b;
+  --red: #e0715f;
+  --radius: 6px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "JetBrains Mono", "SFMono-Regular", Consolas, Menlo, monospace;
+}
+
+.frame {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.1rem 1.5rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.cursor {
+  color: var(--mint);
+  font-weight: 700;
+  animation: blink 1.1s steps(1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor { animation: none; }
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.brand {
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.repo-link {
+  margin-left: auto;
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 0.85rem;
+  border: 1px solid var(--line);
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius);
+}
+
+.repo-link:hover { color: var(--text); border-color: var(--mint); }
+
+.stage {
+  flex: 1;
+  width: min(760px, 92%);
+  margin: 0 auto;
+  padding: 3rem 0 2rem;
+}
+
+.pitch h1 {
+  font-size: 1.7rem;
+  line-height: 1.35;
+  margin: 0 0 0.8rem;
+  font-weight: 600;
+}
+
+.pitch p {
+  color: var(--text-dim);
+  max-width: 60ch;
+  line-height: 1.6;
+  margin: 0 0 2.2rem;
+}
+
+.editor-shell {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 0.9rem;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel-raised);
+}
+
+.file-badge {
+  color: var(--mint);
+  font-size: 0.85rem;
+}
+
+.file-btn {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  cursor: pointer;
+  border: 1px solid var(--line);
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius);
+  margin-left: auto;
+}
+
+.file-btn:hover { color: var(--text); border-color: var(--mint); }
+
+#code-input {
+  width: 100%;
+  min-height: 220px;
+  resize: vertical;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  padding: 1rem;
+}
+
+#code-input::placeholder { color: #565b73; }
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.1rem;
+}
+
+.detect-btn {
+  background: var(--mint);
+  color: #0e1712;
+  border: none;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.92rem;
+  padding: 0.65rem 1.3rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.detect-btn:hover { filter: brightness(1.08); }
+.detect-btn:focus-visible, .file-btn:focus-within { outline: 2px solid var(--mint); outline-offset: 2px; }
+
+.status { color: var(--text-dim); font-size: 0.85rem; }
+
+.error {
+  color: var(--red);
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.result-panel {
+  margin-top: 1.6rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.2rem 1.4rem;
+}
+
+.result-top {
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.result-label {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--mint);
+}
+
+.result-confidence {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+
+.rule-chips {
+  list-style: none;
+  margin: 0.9rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.rule-chips li {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+.runner-ups {
+  margin-top: 1rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.runner-ups-label { color: var(--text-dim); font-size: 0.78rem; }
+
+.runner-up {
+  color: var(--amber);
+  font-size: 0.82rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0.15rem 0.5rem;
+}
+
+.foot {
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.78rem;
+  padding: 1.4rem 0;
+  border-top: 1px solid var(--line);
+}
+
+@media (max-width: 560px) {
+  .pitch h1 { font-size: 1.4rem; }
+  .stage { padding-top: 2rem; }
+}

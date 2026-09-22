@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Code Language Detector</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <div class="frame">
+    <header class="topbar">
+      <span class="cursor">_</span>
+      <span class="brand">code-language-detector</span>
+      <a class="repo-link" href="https://github.com/liyahayut/Code-Language-Detector" target="_blank" rel="noopener">source</a>
+    </header>
+
+    <main class="stage">
+      <section class="pitch">
+        <h1>What language is this code written in?</h1>
+        <p>
+          Paste a snippet or drop a file. A set of weighted pattern rules scores it
+          against 16 languages in microseconds — no model, no training data,
+          no network call.
+        </p>
+      </section>
+
+      <section class="workbench">
+        <form id="detect-form" method="POST" action="/predict" enctype="multipart/form-data">
+          <div class="editor-shell">
+            <div class="editor-header">
+              <span id="file-badge" class="file-badge" hidden></span>
+              <label class="file-btn">
+                upload file
+                <input type="file" name="file" id="file-input" hidden />
+              </label>
+            </div>
+            <textarea
+              id="code-input"
+              name="code"
+              spellcheck="false"
+              placeholder="function greet(name) {&#10;  console.log(`Hello, ${name}!`);&#10;}"
+            >{{ submitted_code or '' }}</textarea>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="detect-btn">Detect language</button>
+            <span id="status" class="status"></span>
+          </div>
+        </form>
+
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <div id="result-panel" class="result-panel" {% if not prediction %}hidden{% endif %}>
+          {% if prediction %}
+          <div class="result-top">
+            <span class="result-label">{{ prediction }}</span>
+            <span class="result-confidence">{{ confidence }}% confidence</span>
+          </div>
+          <ul class="rule-chips">
+            {% for reason in matched_rules.get(prediction, [])[:6] %}
+            <li>{{ reason }}</li>
+            {% endfor %}
+          </ul>
+          {% if ranked and ranked|length > 1 %}
+          <div class="runner-ups">
+            <span class="runner-ups-label">also considered</span>
+            {% for lang, score in ranked[1:4] %}
+            <span class="runner-up">{{ lang }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
+          {% endif %}
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <span>16 languages · zero dependencies · regex rule engine</span>
+    </footer>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
